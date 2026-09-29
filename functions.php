@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('FWERKOR_BLOG_VERSION', '1.1.0');
+define('FWERKOR_BLOG_VERSION', '1.1.1');
 
 function fwerkor_blog_setup(): void {
     add_theme_support('title-tag');
@@ -97,3 +97,28 @@ function fwerkor_blog_logo_url(): string {
     }
     return '';
 }
+
+
+function fwerkor_blog_customize_register(WP_Customize_Manager $wp_customize): void {
+    $wp_customize->add_section('fwerkor_blog_theme_options', [
+        'title'    => __('FWERKOR Blog', 'fwerkor-blog'),
+        'priority' => 160,
+    ]);
+
+    $wp_customize->add_setting('fwerkor_blog_account_url', [
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+        'transport'         => 'refresh',
+    ]);
+
+    $wp_customize->add_control('fwerkor_blog_account_url', [
+        'type'        => 'url',
+        'section'     => 'fwerkor_blog_theme_options',
+        'label'       => __('Account URL', 'fwerkor-blog'),
+        'description' => __('Optional. Leave empty to hide the Account action in the header.', 'fwerkor-blog'),
+        'input_attrs' => [
+            'placeholder' => 'https://example.com/account',
+        ],
+    ]);
+}
+add_action('customize_register', 'fwerkor_blog_customize_register');

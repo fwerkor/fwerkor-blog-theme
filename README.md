@@ -9,7 +9,8 @@ A lightweight WordPress theme for FWERKOR Blog, visually aligned with Auctor whi
 - long-form technical article typography;
 - native WordPress custom logo, menus, widgets, comments and featured images;
 - no frontend framework, jQuery dependency, remote font, or build step;
-- mobile-first navigation and search.
+- mobile-first navigation and search;
+- optional Account header action configurable in Appearance → Customize → FWERKOR Blog.
 
 ## Installation
 

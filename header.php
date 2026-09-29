@@ -57,7 +57,10 @@
                     <button class="theme-option" type="button" role="menuitemradio" data-theme-choice="dark">Dark</button>
                 </div>
             </div>
-            <a class="header-action account-link" href="https://account.fwerkor.com/"><?php esc_html_e('Account', 'fwerkor-blog'); ?></a>
+            <?php $account_url = trim((string) get_theme_mod('fwerkor_blog_account_url', '')); ?>
+            <?php if ($account_url !== '') : ?>
+                <a class="header-action account-link" href="<?php echo esc_url($account_url); ?>"><?php esc_html_e('Account', 'fwerkor-blog'); ?></a>
+            <?php endif; ?>
             <button class="header-action menu-toggle" type="button" aria-controls="site-navigation" aria-expanded="false"><?php esc_html_e('Menu', 'fwerkor-blog'); ?></button>
         </div>
     </div>
