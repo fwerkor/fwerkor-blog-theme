@@ -37,7 +37,7 @@ add_action('wp_enqueue_scripts', 'fwerkor_blog_assets');
 function fwerkor_blog_widgets_init(): void {
     register_sidebar([
         'name' => __('Sidebar', 'fwerkor-blog'),
-        'id' => 'sidebar-1',
+        'id' => 'fwerkor-sidebar',
         'description' => __('Widgets shown beside post listings and articles.', 'fwerkor-blog'),
         'before_widget' => '<section id="%1$s" class="widget %2$s">',
         'after_widget' => '</section>',

@@ -19,7 +19,7 @@ Copy the repository into wp-content/themes/fwerkor-blog and activate FWERKOR Blo
 
 - custom logo
 - primary and footer menu locations
-- sidebar-1
+- dedicated FWERKOR Sidebar widget area
 - featured images
 - responsive embeds
 - HTML5 markup

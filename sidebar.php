@@ -1,6 +1,6 @@
 <aside class="sidebar" aria-label="<?php esc_attr_e('Sidebar', 'fwerkor-blog'); ?>">
-    <?php if (is_active_sidebar('sidebar-1')) : ?>
-        <?php dynamic_sidebar('sidebar-1'); ?>
+    <?php if (is_active_sidebar('fwerkor-sidebar')) : ?>
+        <?php dynamic_sidebar('fwerkor-sidebar'); ?>
     <?php else : ?>
         <section class="sidebar-card sidebar-intro">
             <h2 class="sidebar-heading"><?php esc_html_e('FWERKOR', 'fwerkor-blog'); ?></h2>
