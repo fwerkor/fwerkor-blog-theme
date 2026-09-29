@@ -4,7 +4,7 @@ Theme URI: https://github.com/fwerkor/fwerkor-blog-theme
 Author: FWERKOR
 Author URI: https://www.fwerkor.com
 Description: A clean, responsive WordPress theme for FWERKOR Blog, visually aligned with Auctor.
-Version: 1.0.1
+Version: 1.0.2
 License: MIT
 Text Domain: fwerkor-blog
 Tags: blog, custom-logo, custom-menu, featured-images, accessibility-ready
@@ -63,8 +63,17 @@ button,input,textarea,select { font: inherit; }
 .header-actions { display:flex;align-items:center;gap:4px; }
 .header-action { border:0;background:transparent;cursor:pointer; }
 .header-action:hover { background:#eef3f8; }
-.header-action.account-link { background:var(--fw-blue);color:#fff;padding-inline:16px; }
-.header-action.account-link:hover { background:var(--fw-blue-hover);color:#fff; }
+.header-action.account-link {
+  background:transparent;
+  color:#4f5357;
+  border:1px solid var(--fw-border);
+  padding-inline:14px;
+}
+.header-action.account-link:hover {
+  background:#eef3f8;
+  color:#202124;
+  border-color:#c9cdd2;
+}
 .menu-toggle { display:none; }
 
 .search-panel { border-top:1px solid var(--fw-border);padding:14px 0 16px;background:rgba(248,250,253,.98); }
