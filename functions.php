@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('FWERKOR_BLOG_VERSION', '1.0.3');
+define('FWERKOR_BLOG_VERSION', '1.1.0');
 
 function fwerkor_blog_setup(): void {
     add_theme_support('title-tag');
