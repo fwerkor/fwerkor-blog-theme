@@ -4,7 +4,7 @@ Theme URI: https://github.com/fwerkor/fwerkor-blog-theme
 Author: FWERKOR
 Author URI: https://www.fwerkor.com
 Description: A clean, responsive WordPress theme for FWERKOR Blog, visually aligned with Auctor.
-Version: 1.1.1
+Version: 1.2.0
 License: MIT
 Text Domain: fwerkor-blog
 Tags: blog, custom-logo, custom-menu, featured-images, accessibility-ready
@@ -358,4 +358,41 @@ button,input,textarea,select { font: inherit; color:inherit; }
 @media (prefers-reduced-motion:reduce) {
   html { scroll-behavior:auto; }
   *,*::before,*::after { scroll-behavior:auto!important;transition:none!important; }
+}
+
+
+/* Theme-native code syntax highlighting */
+.entry-content pre.wp-block-code { position:relative; }
+.entry-content pre.wp-block-code[title] > .fw-code-title {
+  margin:-4px 0 12px;padding:0 0 10px;border-bottom:1px solid var(--fw-border);
+  color:var(--fw-muted);font-family:Inter,Roboto,"Noto Sans SC","Microsoft YaHei",system-ui,sans-serif;
+  font-size:13px;font-weight:650;line-height:1.4;white-space:normal;
+}
+.entry-content .token.comment,.entry-content .token.prolog,.entry-content .token.doctype,.entry-content .token.cdata { color:#6a737d; }
+.entry-content .token.punctuation { color:#586069; }
+.entry-content .token.property,.entry-content .token.tag,.entry-content .token.boolean,.entry-content .token.number,.entry-content .token.constant,.entry-content .token.symbol,.entry-content .token.deleted { color:#005cc5; }
+.entry-content .token.selector,.entry-content .token.attr-name,.entry-content .token.string,.entry-content .token.char,.entry-content .token.builtin,.entry-content .token.inserted { color:#032f62; }
+.entry-content .token.operator,.entry-content .token.entity,.entry-content .token.url,.entry-content .language-css .token.string,.entry-content .style .token.string { color:#d73a49; }
+.entry-content .token.atrule,.entry-content .token.attr-value,.entry-content .token.keyword { color:#d73a49; }
+.entry-content .token.function,.entry-content .token.class-name { color:#6f42c1; }
+.entry-content .token.regex,.entry-content .token.important,.entry-content .token.variable { color:#e36209; }
+html[data-theme="dark"] .entry-content .token.comment,html[data-theme="dark"] .entry-content .token.prolog,html[data-theme="dark"] .entry-content .token.doctype,html[data-theme="dark"] .entry-content .token.cdata { color:#8b949e; }
+html[data-theme="dark"] .entry-content .token.punctuation { color:#c9d1d9; }
+html[data-theme="dark"] .entry-content .token.property,html[data-theme="dark"] .entry-content .token.tag,html[data-theme="dark"] .entry-content .token.boolean,html[data-theme="dark"] .entry-content .token.number,html[data-theme="dark"] .entry-content .token.constant,html[data-theme="dark"] .entry-content .token.symbol,html[data-theme="dark"] .entry-content .token.deleted { color:#79c0ff; }
+html[data-theme="dark"] .entry-content .token.selector,html[data-theme="dark"] .entry-content .token.attr-name,html[data-theme="dark"] .entry-content .token.string,html[data-theme="dark"] .entry-content .token.char,html[data-theme="dark"] .entry-content .token.builtin,html[data-theme="dark"] .entry-content .token.inserted { color:#a5d6ff; }
+html[data-theme="dark"] .entry-content .token.operator,html[data-theme="dark"] .entry-content .token.entity,html[data-theme="dark"] .entry-content .token.url,html[data-theme="dark"] .entry-content .language-css .token.string,html[data-theme="dark"] .entry-content .style .token.string { color:#ff7b72; }
+html[data-theme="dark"] .entry-content .token.atrule,html[data-theme="dark"] .entry-content .token.attr-value,html[data-theme="dark"] .entry-content .token.keyword { color:#ff7b72; }
+html[data-theme="dark"] .entry-content .token.function,html[data-theme="dark"] .entry-content .token.class-name { color:#d2a8ff; }
+html[data-theme="dark"] .entry-content .token.regex,html[data-theme="dark"] .entry-content .token.important,html[data-theme="dark"] .entry-content .token.variable { color:#ffa657; }
+.entry-content .token.important,.entry-content .token.bold { font-weight:700; }
+.entry-content .token.italic { font-style:italic; }
+.entry-content pre.line-numbers { position:relative;padding-left:4.2em;counter-reset:linenumber; }
+.entry-content pre.line-numbers > code { position:relative; }
+.entry-content .line-numbers-rows {
+  position:absolute;pointer-events:none;top:0;left:-3.8em;width:3em;letter-spacing:-1px;
+  border-right:1px solid var(--fw-border);user-select:none;
+}
+.entry-content .line-numbers-rows > span { display:block;counter-increment:linenumber; }
+.entry-content .line-numbers-rows > span::before {
+  content:counter(linenumber);display:block;padding-right:.8em;color:var(--fw-dim);text-align:right;
 }

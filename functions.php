@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('FWERKOR_BLOG_VERSION', '1.1.1');
+define('FWERKOR_BLOG_VERSION', '1.2.0');
 
 function fwerkor_blog_setup(): void {
     add_theme_support('title-tag');
@@ -122,3 +122,139 @@ function fwerkor_blog_customize_register(WP_Customize_Manager $wp_customize): vo
     ]);
 }
 add_action('customize_register', 'fwerkor_blog_customize_register');
+
+/**
+ * Theme-native code syntax highlighting.
+ *
+ * Keeps the serialized language, lineNumbers, and title attributes used by
+ * the previous Code Syntax Block plugin so existing posts remain editable.
+ */
+function fwerkor_blog_code_languages(): array {
+    return [
+        'apacheconf' => 'Apache Config',
+        'adoc' => 'Asciidoc',
+        'bash' => 'Bash/Shell',
+        'basic' => 'BASIC',
+        'c' => 'C',
+        'csharp' => 'C#',
+        'cpp' => 'C++',
+        'css' => 'CSS',
+        'dart' => 'Dart',
+        'django' => 'Django',
+        'docker' => 'Docker',
+        'fsharp' => 'F#',
+        'graphql' => 'GraphQL',
+        'go' => 'Go',
+        'haskell' => 'Haskell',
+        'markup' => 'HTML',
+        'java' => 'Java',
+        'javascript' => 'JavaScript',
+        'json' => 'JSON',
+        'kotlin' => 'Kotlin',
+        'lisp' => 'Lisp',
+        'markdown' => 'Markdown',
+        'matlab' => 'MATLAB',
+        'nginx' => 'nginx',
+        'objectivec' => 'Objective-C',
+        'php' => 'PHP',
+        'powershell' => 'PowerShell',
+        'properties' => '.properties',
+        'python' => 'Python',
+        'jsx' => 'React JSX',
+        'ruby' => 'Ruby',
+        'rust' => 'Rust',
+        'sass' => 'Sass',
+        'sql' => 'SQL',
+        'svg' => 'SVG',
+        'swift' => 'Swift',
+        'toml' => 'TOML',
+        'typescript' => 'TypeScript',
+        'vim' => 'vim',
+        'visual-basic' => 'Visual Basic',
+        'wasm' => 'WebAssembly',
+        'xml' => 'XML',
+        'yaml' => 'YAML',
+    ];
+}
+
+function fwerkor_blog_page_has_code(): bool {
+    global $posts;
+    foreach ((array) $posts as $post) {
+        if ($post instanceof WP_Post && has_block('core/code', $post)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function fwerkor_blog_code_frontend_assets(): void {
+    if (is_admin() || !fwerkor_blog_page_has_code()) {
+        return;
+    }
+
+    $uri = get_template_directory_uri();
+    $dir = get_template_directory();
+
+    wp_enqueue_script(
+        'fwerkor-blog-prism',
+        $uri . '/assets/vendor/prism/prism.js',
+        [],
+        (string) filemtime($dir . '/assets/vendor/prism/prism.js'),
+        true
+    );
+    wp_add_inline_script(
+        'fwerkor-blog-prism',
+        'window.FWERKOR_CODE=' . wp_json_encode([
+            'prismComponents' => $uri . '/assets/vendor/prism/prism-components/',
+        ]) . ';',
+        'before'
+    );
+
+    wp_enqueue_script(
+        'fwerkor-blog-code-highlight',
+        $uri . '/assets/js/code-highlight.js',
+        ['fwerkor-blog-prism'],
+        FWERKOR_BLOG_VERSION,
+        true
+    );
+}
+add_action('wp_enqueue_scripts', 'fwerkor_blog_code_frontend_assets', 20);
+
+function fwerkor_blog_code_editor_assets(): void {
+    $uri = get_template_directory_uri();
+    $dir = get_template_directory();
+
+    wp_enqueue_style(
+        'fwerkor-blog-code-editor',
+        $uri . '/assets/css/code-editor.css',
+        [],
+        (string) filemtime($dir . '/assets/css/code-editor.css')
+    );
+
+    wp_enqueue_script(
+        'fwerkor-blog-code-editor',
+        $uri . '/assets/js/code-block-editor.js',
+        ['wp-block-editor', 'wp-blocks', 'wp-components', 'wp-compose', 'wp-element', 'wp-hooks', 'wp-i18n'],
+        (string) filemtime($dir . '/assets/js/code-block-editor.js'),
+        true
+    );
+
+    wp_add_inline_script(
+        'fwerkor-blog-code-editor',
+        'window.FWERKOR_CODE_EDITOR=' . wp_json_encode([
+            'languages' => fwerkor_blog_code_languages(),
+            'defaultLanguage' => sanitize_key((string) get_option('mkaz-code-syntax-default-lang', '')),
+        ]) . ';',
+        'before'
+    );
+}
+add_action('enqueue_block_editor_assets', 'fwerkor_blog_code_editor_assets');
+
+function fwerkor_blog_allow_code_lang_attribute(array $tags): array {
+    if (!isset($tags['code']) || !is_array($tags['code'])) {
+        $tags['code'] = [];
+    }
+    $tags['code']['lang'] = true;
+    return $tags;
+}
+add_filter('wp_kses_allowed_html', 'fwerkor_blog_allow_code_lang_attribute');
